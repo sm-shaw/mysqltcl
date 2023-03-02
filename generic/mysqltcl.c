@@ -918,10 +918,18 @@ static int Mysqltcl_Connect(ClientData clientData, Tcl_Interp *interp, int objc,
 #endif
 #if (MYSQL_VERSION_ID >= 40107)
   if (isSSL) {
+#if (MYSQL_VERSION_ID >= 80000)
+uint opt_use_ssl = SSL_MODE_PREFERRED;
+mysql_options(handle->connection, MYSQL_OPT_SSL_MODE, (uint const*) &opt_use_ssl);
+#endif
       mysql_ssl_set(handle->connection,sslkey,sslcert, sslca, sslcapath, sslcipher);
+  } else {
+#if (MYSQL_VERSION_ID >= 80000)
+uint opt_use_ssl = SSL_MODE_DISABLED;
+mysql_options(handle->connection, MYSQL_OPT_SSL_MODE, (uint const*) &opt_use_ssl);
+#endif
   }
 #endif
-
   if (!mysql_real_connect(handle->connection, hostname, user,
                                 password, db, port, socket, flags)) {
       mysql_server_confl(interp,objc,objv,handle->connection);
