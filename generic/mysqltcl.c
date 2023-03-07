@@ -37,7 +37,9 @@
    #include <windows.h>
    #define PACKAGE "mysqltcl"
    #define PACKAGE_VERSION "3.052"
+   #define uint unsigned int
 #endif
+
 
 #include <tcl.h>
 #include <mysql.h>
