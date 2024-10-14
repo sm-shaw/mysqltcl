@@ -420,7 +420,8 @@ static  MysqlTclHandle *get_handle(Tcl_Interp *interp,int objc,Tcl_Obj *const ob
 static int mysql_QueryTclObj(MysqlTclHandle *handle,Tcl_Obj *obj)
 {
   char *query;
-  int result,queryLen;
+  int result;
+  Tcl_Size queryLen;
 
   Tcl_DString queryDS;
 
@@ -974,7 +975,7 @@ mysql_options(handle->connection, MYSQL_OPT_SSL_MODE, (uint const*) &opt_use_ssl
 
 static int Mysqltcl_Use(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
-  int len;
+  Tcl_Size len;
   char *db;
   MysqlTclHandle *handle;  
 
@@ -1010,7 +1011,7 @@ static int Mysqltcl_Use(ClientData clientData, Tcl_Interp *interp, int objc, Tcl
 
 static int Mysqltcl_Escape(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
-  int len;
+  Tcl_Size len;
   char *inString, *outString;
   MysqlTclHandle *handle;
   
@@ -1205,8 +1206,8 @@ static int Mysqltcl_Exec(ClientData clientData, Tcl_Interp *interp, int objc, Tc
 	MysqlTclHandle *handle;
 	int affected;
 	Tcl_Obj *resList;
-    if ((handle = mysql_prologue(interp, objc, objv, 3, 3, CL_CONN,"handle sql-statement")) == 0)
-    	return TCL_ERROR;
+        if ((handle = mysql_prologue(interp, objc, objv, 3, 3, CL_CONN,"handle sql-statement")) == 0)
+    	   return TCL_ERROR;
 
   	/* Flush any previous result. */
 	freeResult(handle);
@@ -1346,7 +1347,7 @@ static int Mysqltcl_Map(ClientData clientData, Tcl_Interp *interp, int objc, Tcl
 
   MysqlTclHandle *handle;
   int idx;
-  int listObjc;
+  Tcl_Size listObjc;
   Tcl_Obj *tempObj,*varNameObj;
   MYSQL_ROW row;
   int *val;
@@ -1448,7 +1449,7 @@ static int Mysqltcl_Receive(ClientData clientData, Tcl_Interp *interp, int objc,
 
   MysqlTclHandle *handle;
   int idx;
-  int listObjc;
+  Tcl_Size listObjc;
   Tcl_Obj *tempObj,*varNameObj;
   MYSQL_ROW row;
   int *val = NULL;
@@ -1834,7 +1835,7 @@ static int Mysqltcl_Col(ClientData clientData, Tcl_Interp *interp, int objc, Tcl
   int current_db ;
   MysqlTclHandle *handle;
   int idx ;
-  int listObjc ;
+  Tcl_Size listObjc ;
   Tcl_Obj **listObjv, *colinfo, *resList, *resSubList;
   MYSQL_FIELD* fld ;
   MYSQL_RES* result ;
@@ -2012,7 +2013,7 @@ static int Mysqltcl_Ping(ClientData clientData, Tcl_Interp *interp, int objc, Tc
 static int Mysqltcl_ChangeUser(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
   MysqlTclHandle *handle;
-  int len;
+  Tcl_Size len;
   char *user,*password,*database=NULL;
   
   if ((handle = mysql_prologue(interp, objc, objv, 4, 5, CL_CONN,
