@@ -1,7 +1,7 @@
 # Makefile.vc
 
-MYSQLTCL_VERSION = 3.052
-DLL_VERSION = 3052
+MYSQLTCL_VERSION = 3.052.1
+DLL_VERSION = 3052.1
 
 PROJECT = mysqltcl$(DLL_VERSION)
 !include "rules.vc"
@@ -18,7 +18,7 @@ CP      = copy
 RM      = del
 
 PACKAGE_NAME	= mysqltcl
-PACKAGE_VERSION	= 3.052
+PACKAGE_VERSION	= 3.052.1
 DLL = libmysqltcl.dll
 
 lflags = /NOLOGO /MACHINE:$(MACHINE) /LIBPATH:"$(TCL_LIBRARY)"
@@ -29,7 +29,7 @@ dlllflags = $(lflags) -entry:_DllMainCRTStartup -dll
 
 CLFLAGS = /c -Ob2 -favor:blend /MT /W3 /nologo -DUSE_TCL_STUBS -DPACKAGE_NAME=\"mysqltcl\" -DPACKAGE_VERSION=\"3.052\"
 
-baselibs   =  "$(TCL_LIBRARY)/tclstub86.lib" "$(LIBDIR)/libmysql.lib"
+baselibs   =  "$(TCL_LIBRARY)/tclstub.lib" "$(LIBDIR)/libmysql.lib"
 
 DIR_SRC = ..\generic
 
